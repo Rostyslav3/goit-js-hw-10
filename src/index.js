@@ -26,12 +26,16 @@ searchBox.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 function onSearch() {
   const searchName = searchBox.value.trim().toLowerCase();
   console.log(searchName);
-  fetchCountries(searchName)
-    .then(resultSearch)
-    .catch(error => {
-      Notify.failure('Oops, there is no country with that name');
-      clearSearchResult();
-    });
+  if (searchName) {
+    fetchCountries(searchName)
+      .then(resultSearch)
+      .catch(error => {
+        Notify.failure('Oops, there is no country with that name');
+        clearSearchResult();
+      });
+  } else if (searchName === 0) {
+    clearSearchResult();
+  }
 }
 
 function resultSearch(country) {
